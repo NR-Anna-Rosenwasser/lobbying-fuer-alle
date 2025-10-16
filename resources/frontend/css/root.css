@@ -1,0 +1,21 @@
+html {
+    @apply bg-rose text-accent;
+}
+
+.lfa-container {
+    max-width: 930px;
+    box-sizing: content-box;
+    @apply px-4 md:px-8 mx-auto;
+}
+
+.lfa-container__full {
+    max-width: 1530px;
+}
+
+.h-screen {
+    height: calc(var(--vh, 1vh) * 100);
+}
+
+.min-h-screen {
+    min-height: calc(var(--vh, 1vh) * 100);
+}

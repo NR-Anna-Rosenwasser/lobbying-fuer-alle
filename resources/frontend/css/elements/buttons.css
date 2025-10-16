@@ -1,0 +1,4 @@
+.lfa-button {
+    padding: 0.3em 0.75em;
+    @apply bg-accent text-white font-sans hover:bg-accent-dark transition;
+}

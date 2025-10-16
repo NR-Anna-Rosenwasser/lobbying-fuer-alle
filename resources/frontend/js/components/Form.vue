@@ -1,284 +1,5 @@
-<template>
-  <Vueform
-    :display-errors="false"
-    method="POST"
-    :endpoint="handleSubmit"
-    validate-on="step"
-    :float-placeholders="false"
-    size="md"
-    add-class="vf-lobbying-fur-alle"
-    ref="form$"
-  >
-    <template #empty>
-      <FormSteps
-        @next="handleNext"
-        ref="formSteps$"
-      >
-        <FormStep
-          name="page0"
-          label="Über dich"
-          :elements="[
-            'p',
-            'fname',
-            'lname',
-            'email',
-            'phone',
-            'pronouns',
-          ]"
-          :labels="{
-            next: 'Weiter',
-          }"
-          :buttons="{
-            previous: false,
-          }"
-        />
-        <FormStep
-          name="page1"
-          label="Dein Anliegen"
-          :elements="[
-            'p_1',
-            'name',
-            'concernDescription',
-          ]"
-          :labels="{
-            previous: 'Zurück',
-            next: 'Weiter',
-          }"
-        />
-        <FormStep
-          name="page2"
-          label="Geschichte"
-          :elements="[
-            'p_2',
-            'parlchChecked',
-            'pastConcerns',
-            'pastConcernsTimespan',
-            'pastConcernsDetails',
-          ]"
-          :labels="{
-            previous: 'Zurück',
-            next: 'Weiter',
-          }"
-        />
-        <FormStep
-          name="page3"
-          label="Weitere Infos"
-          :elements="[
-            'p_3',
-            'experts',
-            'furtherInformation',
-          ]"
-          :labels="{
-            previous: 'Zurück',
-            next: 'Weiter',
-          }"
-        />
-        <FormStep
-          name="page4"
-          label="Abschluss"
-          :elements="[
-            'h1',
-            'p_4',
-          ]"
-          :labels="{
-            previous: 'Zurück',
-            next: 'Abschicken',
-          }"
-        />
-      </FormSteps>
-
-      <FormElements>
-        <StaticElement
-          name="p"
-          tag="p"
-          content="<div>Zuerst ein paar Informationen zu dir &lt;3<br>Mit dem Absenden dieses Formulars akzeptierst du <a href='https://annarosenwasser.ch/datenschutz'>die Datenschutzbestimmungen.</a></div>"
-        />
-        <TextElement
-          name="fname"
-          label="Wie lautet dein Vorname?"
-          :rules="[
-            'required',
-          ]"
-          :columns="{
-            lg: {
-              container: 6,
-            },
-          }"
-          field-name="Vorname"
-        />
-        <TextElement
-          name="lname"
-          label="Und dein Nachname?"
-          :rules="[
-            'required',
-          ]"
-          :columns="{
-            lg: {
-              container: 6,
-            },
-          }"
-          field-name="Nachname"
-        />
-        <TextElement
-          name="email"
-          input-type="email"
-          :rules="[
-            'nullable',
-            'required',
-            'email',
-          ]"
-          label="Deine E-Mail Adresse"
-          field-name="E-Mail Adresse"
-        />
-        <PhoneElement
-          name="phone"
-          label="Deine Telefonummer"
-          :allow-incomplete="true"
-          :unmask="true"
-          default="+41"
-          :columns="{
-            lg: {
-              container: 6,
-            },
-          }"
-          info="Optional"
-        />
-        <TextElement
-          name="pronouns"
-          label="Wie lauten deine Pronomen?"
-          placeholder="optional"
-          :columns="{
-            lg: {
-              container: 6,
-            },
-          }"
-        />
-        <StaticElement
-          name="p_1"
-          tag="p"
-          content="<div>Danke, {fname}! Beschreibe uns hier bitte dein Anliegen so präzise wie möglich.</div>"
-          :expressions="true"
-        />
-        <TextElement
-          name="name"
-          label="Gib deinem Anliegen bitte einen Kurznamen."
-          description="So können wir dein Anliegen einfacher identifizieren."
-          :rules="[
-            'required',
-            'max:60',
-          ]"
-          field-name="Kurzname"
-        />
-        <EditorElement
-          name="concernDescription"
-          label="Worum's gehts?"
-          placeholder="Ich möchte, dass..."
-          :hide-tools="[
-            'attach',
-            'heading',
-            'quote',
-            'code',
-          ]"
-          :rules="[
-            'required',
-            'min:400',
-            'max:5000',
-          ]"
-          description="min. 400 Zeichen, max. 5'000"
-          field-name="Beschreibung"
-        />
-        <StaticElement
-          name="p_2"
-          tag="p"
-          content="<div>Es gibt Anliegen, die regelmässig von Parlamentarier*innen gefordert werden. Vielleicht wurde dein Anliegen bereits von einem anderen Parlamentsmitglied aufgenommen. <a href='https://www.parlament.ch/de/ratsbetrieb/suche-curia-vista'>Bitte prüfe die Datenbank des Parlaments möglichst genau</a>, um herauszufinden, ob dein Anliegen bereits in der Vergangenheit bearbeitet wurde.</div>"
-        />
-        <CheckboxElement
-          name="parlchChecked"
-          text="Hast du überprüft, ob es in der Vergangenheit schon mal ein Geschäft zu deinem Anliegen gegeben hat?"
-          default="true"
-          :rules="[
-            'accepted',
-          ]"
-          field-name="parl.ch Datenbank-check"
-        />
-        <CheckboxElement
-          name="pastConcerns"
-          text="Hat es in der Vergangenheit bereits Geschäfte zu deinem Anliegen gegeben?"
-          field-name="Vergangene Geschäfte"
-        />
-        <CheckboxElement
-          name="pastConcernsTimespan"
-          text="Sind diese Geschäfte schon lange genug her, damit deine Forderung wieder aktuell ist?"
-          description="Es gibt keine «Regel», wie lange es dauern sollte. Stell dir die Frage: «Hat sich in der Zwischenzeit etwas verändert, damit das Anliegen dieses Mal bessere Chancen hat?»"
-          default="true"
-          :conditions="[
-            [
-              'pastConcerns',
-              '==',
-              true,
-            ],
-          ]"
-          :rules="[
-            'accepted',
-          ]"
-          field-name="Zeit seit letztem Geschäft"
-        />
-        <TextareaElement
-          name="pastConcernsDetails"
-          label="Welche Geschäfte behandeln dein Anliegen?"
-          description="Nenn uns am besten die Nummern der Geschäfte, welche dein Anliegen in der Vergangenheit behandelt haben."
-          :rules="[
-            'required',
-          ]"
-          field-name="Details zu früheren Geschäften"
-          :conditions="[
-            [
-              'pastConcerns',
-              '==',
-              true,
-            ],
-          ]"
-        />
-        <StaticElement
-          name="p_3"
-          tag="p"
-          content="<div>Vorstösse zu schreiben, braucht viel Recherche. Kannst du uns hier noch weitere Infos zu deinem Anliegen nennen?</div>"
-        />
-        <TextareaElement
-          name="experts"
-          label="Kennst du Expert*innen, Organisationen oder sonstige Menschen, welche mehr über dein Anliegen wissen?"
-          description="Du darfst natürlich auch dich selbst nennen 😉 Sag uns in diesem Fall doch bitte, welche Expertise du mitbringst."
-          placeholder="optional"
-          :floating="false"
-          field-name="Expert*innen"
-        />
-        <TextareaElement
-          name="furtherInformation"
-          label="Hast du Quellen für weitere Informationen?"
-          placeholder="optional"
-          :floating="false"
-          description="Egal ob Bücher, Links, Podcasts, Dokumentarfilme... Hier kannst du einfach alles zu deinem Thema reinhauen."
-          field-name="Quellen"
-        />
-        <StaticElement
-          name="h1"
-          tag="h1"
-          content="Du bist krass, {fname}!"
-          :expressions="true"
-        />
-        <StaticElement
-          name="p_4"
-          tag="p"
-          content="<div>Hast du alles ready? Bist du zufrieden mit den Informationen, die du eingetragen hast? Wenn ja: Dann schick jetzt das Formular ab.</div>"
-        />
-      </FormElements>
-
-      <FormStepsControls />
-    </template>
-  </Vueform>
-</template>
-
 <script setup>
+import { Icon } from '@iconify/vue';
 import { onMounted, ref } from 'vue'
 
 
@@ -289,29 +10,36 @@ onMounted(() => {
     const savedData = localStorage.getItem('formData');
     const currentStep = localStorage.getItem('currentStep') || 'page0';
     if (savedData) {
+        console.log
         form$.value.update(JSON.parse(savedData));
         formSteps$.value.goTo(currentStep)
     }
 });
 
 const handleNext = (next$) => {
-    localStorage.setItem('formData', JSON.stringify(form$.value.data));
+    localStorage.setItem('formData', JSON.stringify(form$.value?.data || {}));
     localStorage.setItem('currentStep', next$.name);
+};
+
+const resetForm = () => {
+    localStorage.removeItem('formData');
+    localStorage.removeItem('currentStep');
+    form$.value.reset();
+    formSteps$.value.goTo('page0');
 };
 
 const handleSubmit = async (FormData, form$) => {
 
     // Get all form data
     const data = form$.data;
-    console.log('Form Data:', data);
 
-    // fetch('/api/test', {
-    //     method: 'POST',
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify(FormData),
-    // }).then(response => response.json())
+    fetch('/api/create-entry', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    }).then(response => response.json())
     //   .then(data => {
     //       console.log('Success:', data);
     //       localStorage.removeItem('formData');
@@ -321,13 +49,352 @@ const handleSubmit = async (FormData, form$) => {
     };
 </script>
 
+<template>
+    <div>
+        <Vueform
+            :display-errors="false"
+            method="POST"
+            :endpoint="handleSubmit"
+            ref="form$"
+            validate-on="step"
+            :float-placeholders="false"
+            size="md"
+            add-class="vf-lobbying-fur-alle"
+        >
+            <template #empty>
+            <FormSteps
+            @next="handleNext"
+            ref="formSteps$"
+            >
+                <FormStep
+                name="page0"
+                label="Start"
+                :elements="[
+                    'h1_1',
+                    'p_5',
+                ]"
+                :buttons="{
+                    previous: false,
+                }"
+                :labels="{
+                    next: 'Los 👉',
+                }"
+                />
+                <FormStep
+                name="page1"
+                label="Über dich"
+                :elements="[
+                    'h1_2',
+                    'p',
+                    'fname',
+                    'lname',
+                    'email',
+                    'phone',
+                    'pronouns',
+                ]"
+                :buttons="{
+                    previous: false,
+                }"
+                :labels="{
+                    next: 'Weiter',
+                }"
+                />
+                <FormStep
+                name="page2"
+                label="Dein Anliegen"
+                :elements="[
+                    'h1_3',
+                    'p_1',
+                    'name',
+                    'concernDescription',
+                ]"
+                :buttons="{
+                    previous: false,
+                }"
+                :labels="{
+                    next: 'Weiter',
+                }"
+                />
+                <FormStep
+                name="page3"
+                label="Geschichte"
+                :elements="[
+                    'h1_4',
+                    'p_2',
+                    'parlchChecked',
+                    'pastConcerns',
+                    'pastConcernsTimespan',
+                    'pastConcernsDetails',
+                ]"
+                :labels="{
+                    previous: 'Zurück',
+                    next: 'Weiter',
+                }"
+                />
+                <FormStep
+                name="page4"
+                label="Weitere Infos"
+                :elements="[
+                    'h1_5',
+                    'p_3',
+                    'experts',
+                    'furtherInformation',
+                ]"
+                :labels="{
+                    previous: 'Zurück',
+                    next: 'Weiter',
+                }"
+                />
+                <FormStep
+                name="page5"
+                label="Abschluss"
+                :elements="[
+                    'h1',
+                    'p_4',
+                ]"
+                :labels="{
+                    previous: 'Zurück',
+                    next: 'Abschicken',
+                }"
+                />
+            </FormSteps>
+
+            <FormElements>
+                <StaticElement
+                name="h1_2"
+                tag="h1"
+                content="Zuerst zu dir"
+                />
+                <StaticElement
+                name="p"
+                tag="p"
+                content="<div>Mit dem Absenden dieses Formulars akzeptierst du <a href='https://annarosenwasser.ch/datenschutz'>die Datenschutzbestimmungen.</a></div>"
+                />
+                <TextElement
+                name="fname"
+                label="Wie lautet dein Vorname?"
+                :rules="[
+                    'required',
+                ]"
+                :columns="{
+                    lg: {
+                    container: 6,
+                    },
+                }"
+                field-name="Vorname"
+                />
+                <TextElement
+                name="lname"
+                label="Und dein Nachname?"
+                :rules="[
+                    'required',
+                ]"
+                :columns="{
+                    lg: {
+                    container: 6,
+                    },
+                }"
+                field-name="Nachname"
+                />
+                <TextElement
+                name="email"
+                input-type="email"
+                :rules="[
+                    'nullable',
+                    'required',
+                    'email',
+                ]"
+                label="Deine E-Mail Adresse"
+                field-name="E-Mail Adresse"
+                />
+                <PhoneElement
+                name="phone"
+                label="Deine Telefonummer"
+                :allow-incomplete="true"
+                :unmask="true"
+                default="+41"
+                :columns="{
+                    lg: {
+                    container: 6,
+                    },
+                }"
+                info="Optional"
+                />
+                <TextElement
+                name="pronouns"
+                label="Wie lauten deine Pronomen?"
+                placeholder="optional"
+                :columns="{
+                    lg: {
+                    container: 6,
+                    },
+                }"
+                />
+                <StaticElement
+                name="h1_3"
+                tag="h1"
+                content="Danke, {fname}!"
+                :expressions="true"
+                />
+                <StaticElement
+                name="p_1"
+                tag="p"
+                content="<div>Beschreibe uns hier bitte dein Anliegen so präzise wie möglich.</div>"
+                :expressions="true"
+                />
+                <TextElement
+                name="concernName"
+                label="Gib deinem Anliegen bitte einen Kurznamen."
+                description="So können wir dein Anliegen einfacher identifizieren."
+                :rules="[
+                    'required',
+                    'max:60',
+                ]"
+                field-name="Kurzname"
+                />
+                <EditorElement
+                name="concernDescription"
+                label="Worum's gehts?"
+                placeholder="Ich möchte, dass..."
+                :hide-tools="[
+                    'attach',
+                    'heading',
+                    'quote',
+                    'code',
+                ]"
+                :rules="[
+                    'required',
+                    'min:400',
+                    'max:5000',
+                ]"
+                description="min. 400 Zeichen, max. 5'000"
+                field-name="Beschreibung"
+                />
+                <StaticElement
+                name="h1_4"
+                tag="h1"
+                content="Gab es schon mal was dazu?"
+                />
+                <StaticElement
+                name="p_2"
+                tag="p"
+                content="<div>Es gibt Anliegen, die regelmässig von Parlamentarier*innen gefordert werden. Vielleicht wurde dein Anliegen bereits von einem anderen Parlamentsmitglied aufgenommen. <a href='https://www.parlament.ch/de/ratsbetrieb/suche-curia-vista'>Bitte prüfe die Datenbank des Parlaments möglichst genau</a>, um herauszufinden, ob dein Anliegen bereits in der Vergangenheit bearbeitet wurde.</div>"
+                />
+                <CheckboxElement
+                name="parlchChecked"
+                text="Hast du überprüft, ob es in der Vergangenheit schon mal ein Geschäft zu deinem Anliegen gegeben hat?"
+                default="true"
+                :rules="[
+                    'accepted',
+                ]"
+                field-name="parl.ch Datenbank-check"
+                />
+                <CheckboxElement
+                name="pastConcerns"
+                text="Hat es in der Vergangenheit bereits Geschäfte zu deinem Anliegen gegeben?"
+                field-name="Vergangene Geschäfte"
+                />
+                <CheckboxElement
+                name="pastConcernsTimespan"
+                text="Sind diese Geschäfte schon lange genug her, damit deine Forderung wieder aktuell ist?"
+                description="Es gibt keine «Regel», wie lange es dauern sollte. Stell dir die Frage: «Hat sich in der Zwischenzeit etwas verändert, damit das Anliegen dieses Mal bessere Chancen hat?»"
+                default="true"
+                :conditions="[
+                    [
+                    'pastConcerns',
+                    '==',
+                    true,
+                    ],
+                ]"
+                :rules="[
+                    'accepted',
+                ]"
+                field-name="Zeit seit letztem Geschäft"
+                />
+                <TextareaElement
+                name="pastConcernsDetails"
+                label="Welche Geschäfte behandeln dein Anliegen?"
+                description="Nenn uns am besten die Nummern der Geschäfte, welche dein Anliegen in der Vergangenheit behandelt haben."
+                :rules="[
+                    'required',
+                ]"
+                field-name="Details zu früheren Geschäften"
+                :conditions="[
+                    [
+                    'pastConcerns',
+                    '==',
+                    true,
+                    ],
+                ]"
+                />
+                <StaticElement
+                name="h1_5"
+                tag="h1"
+                content="Hast du weitere Infos?"
+                />
+                <StaticElement
+                name="p_3"
+                tag="p"
+                content="<div>Vorstösse zu schreiben, braucht viel Recherche. Kannst du uns hier noch weitere Infos zu deinem Anliegen nennen?</div>"
+                />
+                <TextareaElement
+                name="experts"
+                label="Kennst du Expert*innen, Organisationen oder sonstige Menschen, welche mehr über dein Anliegen wissen?"
+                description="Du darfst natürlich auch dich selbst nennen 😉 Sag uns in diesem Fall doch bitte, welche Expertise du mitbringst."
+                placeholder="optional"
+                :floating="false"
+                field-name="Expert*innen"
+                />
+                <TextareaElement
+                name="furtherInformation"
+                label="Hast du Quellen für weitere Informationen?"
+                placeholder="optional"
+                :floating="false"
+                description="Egal ob Bücher, Links, Podcasts, Dokumentarfilme... Hier kannst du einfach alles zu deinem Thema reinhauen."
+                field-name="Quellen"
+                />
+                <StaticElement
+                name="h1"
+                tag="h1"
+                content="Du bist krass, {fname}!"
+                :expressions="true"
+                />
+                <StaticElement
+                name="p_4"
+                tag="p"
+                content="<div>Hast du alles ready? Bist du zufrieden mit den Informationen, die du eingetragen hast? Wenn ja: Dann schick jetzt das Formular ab.</div>"
+                />
+                <StaticElement
+                name="h1_1"
+                tag="h1"
+                content="Bevor wir anfangen 🤔"
+                align="left"
+                />
+                <StaticElement
+                name="p_5"
+                tag="p"
+                content="<div><strong>1. Diese Kampagne wird von Anna Rosenwasser und ihrem Mitarbeiterbüsi betrieben</strong> – was du hier rein schreibst, sehen wir beide.<br> <br><strong>2. Auch wenn wir uns das alles gut überlegt haben, können wir nicht garantieren, dass nichts schief läuft.</strong> Wir haben absolut keinen Plan<em> </em>wie viele Anliegen an uns herangetragen werden. Deshalb können wir dir nicht garantieren, dass wir dein Anliegen aufnehmen werden. Das soll aber auf keinen Fall heissen, dass dein Anliegen nicht wichtig ist oder wir es nicht für wichtig halten. Sei bitte nicht enttäuscht 💜<br><br><strong>3. Nimm dir Zeit und füll das Formular bitte sauber aus.</strong> Du kannst den Browser auch schliessen und später zurückkehren, nach jedem Schritt werden deine Angaben auf deinem Gerät gespeichert.<br><br>Wenn du Fragen hast, <a href='mailto:anna@rosenwasser.ch'>schreib uns ungeniert eine E-Mail!</a></div>"
+                align="left"
+                />
+            </FormElements>
+
+            <FormStepsControls />
+            </template>
+        </Vueform>
+    </div>
+    <div class="lfa-form__reset text-accent flex items-center justify-end opacity-80 mt-6 cursor-pointer select-none" @click="resetForm">
+        <Icon icon="material-symbols:device-reset" />
+        <span class="ml-2">neu beginnen</span>
+    </div>
+</template>
+
 <style>
 .vf-lobbying-fur-alle *,
 .vf-lobbying-fur-alle *:before,
 .vf-lobbying-fur-alle *:after,
 .vf-lobbying-fur-alle:root {
-  --vf-primary: #0506DD;
-  --vf-primary-darker: #070985;
+  --vf-primary: var(--color-accent);
+  --vf-primary-darker: var(--color-accent-darker);
   --vf-danger: #ef4444;
   --vf-danger-lighter: #fee2e2;
   --vf-success: #10b981;
@@ -483,16 +550,16 @@ const handleSubmit = async (FormData, form$) => {
   --vf-floating-top: 0rem;
   --vf-floating-top-sm: 0rem;
   --vf-floating-top-lg: 0.6875rem;
-  --vf-bg-input: #ffffff;
+  --vf-bg-input: var(--color-rose);
   --vf-bg-input-hover: #ffffff;
   --vf-bg-input-focus: #ffffff;
-  --vf-bg-input-danger: #ffffff;
-  --vf-bg-input-success: #ffffff;
-  --vf-bg-checkbox: #ffffff;
-  --vf-bg-checkbox-hover: #ffffff;
-  --vf-bg-checkbox-focus: #ffffff;
-  --vf-bg-checkbox-danger: #ffffff;
-  --vf-bg-checkbox-success: #ffffff;
+  --vf-bg-input-danger: var(--color-rose);
+  --vf-bg-input-success: var(--color-rose);
+  --vf-bg-checkbox: var(--color-rose);
+  --vf-bg-checkbox-hover: var(--color-rose);
+  --vf-bg-checkbox-focus: var(--color-rose);
+  --vf-bg-checkbox-danger: var(--color-rose);
+  --vf-bg-checkbox-success: var(--color-rose);
   --vf-bg-disabled: var(--vf-gray-200);
   --vf-bg-selected: #0506DD0d;
   --vf-bg-passive: var(--vf-gray-300);
@@ -501,7 +568,7 @@ const handleSubmit = async (FormData, form$) => {
   --vf-bg-success: var(--vf-success-lighter);
   --vf-bg-tag: var(--vf-primary);
   --vf-bg-slider-handle: var(--vf-primary);
-  --vf-bg-toggle-handle: #ffffff;
+  --vf-bg-toggle-handle: var(--color-rose);
   --vf-bg-date-head: var(--vf-gray-100);
   --vf-bg-addon: #ffffff00;
   --vf-bg-btn: var(--vf-primary);

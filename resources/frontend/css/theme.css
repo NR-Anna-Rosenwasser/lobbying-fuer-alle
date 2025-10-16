@@ -1,0 +1,9 @@
+@import 'tailwindcss';
+
+@theme {
+    --font-sans: 'Inter', sans-serif;
+    --font-serif: 'Roboto Serif', serif;
+    --color-rose: #FEF4FE;
+    --color-accent: #0506DD;
+    --color-accent-dark: #070985;
+}

@@ -1,1 +1,5 @@
-@import 'tailwindcss';
+@import url("https://fonts.bunny.net/css?family=inter:900,900i|roboto-serif:300,300i,600,600i");
+@import './theme.css';
+@import './root.css';
+@import './typography.css';
+@import './elements/buttons.css';
