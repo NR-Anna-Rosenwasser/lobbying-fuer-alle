@@ -16,7 +16,7 @@ onMounted(() => {
 
 <template>
     <Header />
-    <main>
+    <main class="pb-6 md:pb-8 lg:pb-10">
         <slot />
     </main>
 </template>

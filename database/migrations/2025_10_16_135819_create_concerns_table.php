@@ -20,7 +20,7 @@ return new class extends Migration
             $table->boolean("parlch_checked")->default(false);
             $table->boolean("past_concerns")->default(false);
             $table->boolean("past_concerns_timespan")->nullable();
-            $table->boolean("past_concerns_details")->nullable();
+            $table->text("past_concerns_details")->nullable();
             $table->text("experts")->nullable();
             $table->text("further_information")->nullable();
             $table->foreignId('constituent_id')->constrained()->onDelete('cascade');

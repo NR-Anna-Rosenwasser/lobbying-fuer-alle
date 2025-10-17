@@ -1,6 +1,7 @@
 <script setup>
 import { Icon } from '@iconify/vue';
 import { onMounted, ref } from 'vue'
+import { router } from '@inertiajs/vue3';
 
 
 const form$ = ref(null)
@@ -32,20 +33,27 @@ const handleSubmit = async (FormData, form$) => {
 
     // Get all form data
     const data = form$.data;
+    // Cast all checkbox values to boolean
+    for (const key in data) {
+        if (typeof data[key] === 'string' && (data[key] === 'true' || data[key] === 'false')) {
+            data[key] = data[key] === 'true';
+        }
+    }
 
-    fetch('/api/create-entry', {
+    // console.log(JSON.stringify(data));
+
+    fetch('/api/concerns', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(data),
     }).then(response => response.json())
-    //   .then(data => {
-    //       console.log('Success:', data);
-    //       localStorage.removeItem('formData');
-    //       localStorage.removeItem('currentStep');
-    //       formSteps$.value.goTo('page0');
-    //   })
+      .then(data => {
+            localStorage.removeItem('formData');
+            localStorage.removeItem('currentStep');
+            router.visit(`/danke/${data.data.concern.uuid}`);
+      })
     };
 </script>
 
@@ -86,11 +94,11 @@ const handleSubmit = async (FormData, form$) => {
                 :elements="[
                     'h1_2',
                     'p',
-                    'fname',
-                    'lname',
-                    'email',
-                    'phone',
-                    'pronouns',
+                    'constituentFname',
+                    'constituentLname',
+                    'constituentEmail',
+                    'constituentPhone',
+                    'constituentPronouns',
                 ]"
                 :buttons="{
                     previous: false,
@@ -105,7 +113,7 @@ const handleSubmit = async (FormData, form$) => {
                 :elements="[
                     'h1_3',
                     'p_1',
-                    'name',
+                    'concernTitle',
                     'concernDescription',
                 ]"
                 :buttons="{
@@ -121,13 +129,15 @@ const handleSubmit = async (FormData, form$) => {
                 :elements="[
                     'h1_4',
                     'p_2',
-                    'parlchChecked',
-                    'pastConcerns',
-                    'pastConcernsTimespan',
-                    'pastConcernsDetails',
+                    'concernParlchChecked',
+                    'concernPastConcerns',
+                    'concernPastConcernsTimespan',
+                    'concernPastConcernsDetails',
                 ]"
+                :buttons="{
+                    previous: false,
+                }"
                 :labels="{
-                    previous: 'Zurück',
                     next: 'Weiter',
                 }"
                 />
@@ -137,11 +147,13 @@ const handleSubmit = async (FormData, form$) => {
                 :elements="[
                     'h1_5',
                     'p_3',
-                    'experts',
-                    'furtherInformation',
+                    'concernExperts',
+                    'concernFurtherInformation',
                 ]"
+                :buttons="{
+                    previous: false,
+                }"
                 :labels="{
-                    previous: 'Zurück',
                     next: 'Weiter',
                 }"
                 />
@@ -152,8 +164,10 @@ const handleSubmit = async (FormData, form$) => {
                     'h1',
                     'p_4',
                 ]"
+                :buttons="{
+                    previous: false,
+                }"
                 :labels="{
-                    previous: 'Zurück',
                     next: 'Abschicken',
                 }"
                 />
@@ -171,7 +185,7 @@ const handleSubmit = async (FormData, form$) => {
                 content="<div>Mit dem Absenden dieses Formulars akzeptierst du <a href='https://annarosenwasser.ch/datenschutz'>die Datenschutzbestimmungen.</a></div>"
                 />
                 <TextElement
-                name="fname"
+                name="constituentFname"
                 label="Wie lautet dein Vorname?"
                 :rules="[
                     'required',
@@ -184,7 +198,7 @@ const handleSubmit = async (FormData, form$) => {
                 field-name="Vorname"
                 />
                 <TextElement
-                name="lname"
+                name="constituentLname"
                 label="Und dein Nachname?"
                 :rules="[
                     'required',
@@ -197,7 +211,7 @@ const handleSubmit = async (FormData, form$) => {
                 field-name="Nachname"
                 />
                 <TextElement
-                name="email"
+                name="constituentEmail"
                 input-type="email"
                 :rules="[
                     'nullable',
@@ -208,7 +222,7 @@ const handleSubmit = async (FormData, form$) => {
                 field-name="E-Mail Adresse"
                 />
                 <PhoneElement
-                name="phone"
+                name="constituentPhone"
                 label="Deine Telefonummer"
                 :allow-incomplete="true"
                 :unmask="true"
@@ -221,7 +235,7 @@ const handleSubmit = async (FormData, form$) => {
                 info="Optional"
                 />
                 <TextElement
-                name="pronouns"
+                name="constituentPronouns"
                 label="Wie lauten deine Pronomen?"
                 placeholder="optional"
                 :columns="{
@@ -233,7 +247,7 @@ const handleSubmit = async (FormData, form$) => {
                 <StaticElement
                 name="h1_3"
                 tag="h1"
-                content="Danke, {fname}!"
+                content="Danke, {constituentFname}!"
                 :expressions="true"
                 />
                 <StaticElement
@@ -243,7 +257,7 @@ const handleSubmit = async (FormData, form$) => {
                 :expressions="true"
                 />
                 <TextElement
-                name="concernName"
+                name="concernTitle"
                 label="Gib deinem Anliegen bitte einen Kurznamen."
                 description="So können wir dein Anliegen einfacher identifizieren."
                 :rules="[
@@ -264,10 +278,10 @@ const handleSubmit = async (FormData, form$) => {
                 ]"
                 :rules="[
                     'required',
-                    'min:400',
-                    'max:5000',
+                    'min:200',
+                    'max:2000',
                 ]"
-                description="min. 400 Zeichen, max. 5'000"
+                description="min. 200 Zeichen, max. 2'000"
                 field-name="Beschreibung"
                 />
                 <StaticElement
@@ -281,7 +295,7 @@ const handleSubmit = async (FormData, form$) => {
                 content="<div>Es gibt Anliegen, die regelmässig von Parlamentarier*innen gefordert werden. Vielleicht wurde dein Anliegen bereits von einem anderen Parlamentsmitglied aufgenommen. <a href='https://www.parlament.ch/de/ratsbetrieb/suche-curia-vista'>Bitte prüfe die Datenbank des Parlaments möglichst genau</a>, um herauszufinden, ob dein Anliegen bereits in der Vergangenheit bearbeitet wurde.</div>"
                 />
                 <CheckboxElement
-                name="parlchChecked"
+                name="concernParlchChecked"
                 text="Hast du überprüft, ob es in der Vergangenheit schon mal ein Geschäft zu deinem Anliegen gegeben hat?"
                 default="true"
                 :rules="[
@@ -290,18 +304,17 @@ const handleSubmit = async (FormData, form$) => {
                 field-name="parl.ch Datenbank-check"
                 />
                 <CheckboxElement
-                name="pastConcerns"
+                name="concernPastConcerns"
                 text="Hat es in der Vergangenheit bereits Geschäfte zu deinem Anliegen gegeben?"
                 field-name="Vergangene Geschäfte"
                 />
                 <CheckboxElement
-                name="pastConcernsTimespan"
+                name="concernPastConcernsTimespan"
                 text="Sind diese Geschäfte schon lange genug her, damit deine Forderung wieder aktuell ist?"
                 description="Es gibt keine «Regel», wie lange es dauern sollte. Stell dir die Frage: «Hat sich in der Zwischenzeit etwas verändert, damit das Anliegen dieses Mal bessere Chancen hat?»"
-                default="true"
                 :conditions="[
                     [
-                    'pastConcerns',
+                    'concernPastConcerns',
                     '==',
                     true,
                     ],
@@ -312,7 +325,7 @@ const handleSubmit = async (FormData, form$) => {
                 field-name="Zeit seit letztem Geschäft"
                 />
                 <TextareaElement
-                name="pastConcernsDetails"
+                name="concernPastConcernsDetails"
                 label="Welche Geschäfte behandeln dein Anliegen?"
                 description="Nenn uns am besten die Nummern der Geschäfte, welche dein Anliegen in der Vergangenheit behandelt haben."
                 :rules="[
@@ -321,7 +334,7 @@ const handleSubmit = async (FormData, form$) => {
                 field-name="Details zu früheren Geschäften"
                 :conditions="[
                     [
-                    'pastConcerns',
+                    'concernPastConcerns',
                     '==',
                     true,
                     ],
@@ -338,7 +351,7 @@ const handleSubmit = async (FormData, form$) => {
                 content="<div>Vorstösse zu schreiben, braucht viel Recherche. Kannst du uns hier noch weitere Infos zu deinem Anliegen nennen?</div>"
                 />
                 <TextareaElement
-                name="experts"
+                name="concernExperts"
                 label="Kennst du Expert*innen, Organisationen oder sonstige Menschen, welche mehr über dein Anliegen wissen?"
                 description="Du darfst natürlich auch dich selbst nennen 😉 Sag uns in diesem Fall doch bitte, welche Expertise du mitbringst."
                 placeholder="optional"
@@ -346,7 +359,7 @@ const handleSubmit = async (FormData, form$) => {
                 field-name="Expert*innen"
                 />
                 <TextareaElement
-                name="furtherInformation"
+                name="concernFurtherInformation"
                 label="Hast du Quellen für weitere Informationen?"
                 placeholder="optional"
                 :floating="false"
@@ -356,7 +369,7 @@ const handleSubmit = async (FormData, form$) => {
                 <StaticElement
                 name="h1"
                 tag="h1"
-                content="Du bist krass, {fname}!"
+                content="Du bist krass, {constituentFname}!"
                 :expressions="true"
                 />
                 <StaticElement

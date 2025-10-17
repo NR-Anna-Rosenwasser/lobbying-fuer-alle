@@ -1,6 +1,5 @@
 <script setup>
 import AppLogo from '@/Components/AppLogo.vue';
-import Menu from './Menu.vue';
 import { onMounted, ref } from 'vue';
 
 const header = ref(null);
@@ -22,7 +21,6 @@ onMounted(() => {
         <div class="lfa-container lfa-container__full">
             <header class="my-6 md:my-8 lg:my-10 flex justify-between items-center">
                 <AppLogo />
-                <Menu />
             </header>
         </div>
     </div>

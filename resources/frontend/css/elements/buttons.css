@@ -1,4 +1,14 @@
-.lfa-button {
+.lfa-button,
+.lfa-share-buttons__button {
     padding: 0.3em 0.75em;
-    @apply bg-accent text-white font-sans hover:bg-accent-dark transition;
+    @apply bg-accent text-white font-sans hover:bg-accent-dark transition text-center;
+}
+
+.lfa-share-buttons__button {
+    background-color: var(--button-color, var(--color-accent));
+    @apply text-lg md:text-xl flex items-center justify-center gap-2;
+
+    &:hover {
+        background-color: var(--button-color, var(--color-accent-dark));
+    }
 }
