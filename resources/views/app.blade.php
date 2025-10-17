@@ -1,6 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
   <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
     <title>Lobbying für alle – damit auch dein Anliegen gehört wird</title>
     <meta name="description" content="In der Schweiz finden Anliegen mit mehr Geld auch mehr Gehör. Damit auch dein Anliegen gehört wird, haben wir die Kampagne «Lobbying für alle» ins Leben gerufen." />
     <meta property="og:title" content="Lobbying für alle – damit auch dein Anliegen gehört wird" />
