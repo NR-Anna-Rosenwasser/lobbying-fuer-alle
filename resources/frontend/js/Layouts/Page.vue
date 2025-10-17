@@ -23,6 +23,6 @@ onMounted(() => {
 
 <style>
 main {
-    padding-top: var(--header-size);
+    padding-top: var(--header-size, 170px);
 }
 </style>
