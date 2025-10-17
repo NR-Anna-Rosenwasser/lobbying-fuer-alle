@@ -1,3 +1,5 @@
+@import "./fonts.css";
+
 html {
     font-family: 'Roboto Serif', serif;
     font-size: clamp(16px, 1.045vw, 22px);
