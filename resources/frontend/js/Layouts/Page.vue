@@ -21,7 +21,7 @@ onMounted(() => {
     </main>
 </template>
 
-<style scoped>
+<style>
 main {
     padding-top: var(--header-size);
 }
