@@ -6,6 +6,7 @@ import { router } from '@inertiajs/vue3';
 
 const form$ = ref(null)
 const formSteps$ = ref(null)
+const storeButton$ = ref(null)
 
 onMounted(() => {
     const savedData = localStorage.getItem('formData');
@@ -22,7 +23,19 @@ const handleNext = (next$) => {
     localStorage.setItem('currentStep', next$.name);
 };
 
+const saveProgess = () => {
+    localStorage.setItem('formData', JSON.stringify(form$.value?.data || {}));
+    storeButton$.value.innerText = 'Gespeichert ✅';
+    setTimeout(() => {
+        storeButton$.value.innerText = 'Formular speichern';
+    }, 2000);
+};
+
 const resetForm = () => {
+    let confirm = window.confirm('Bist du sicher, dass du das Formular neu beginnen möchtest? Alle bisher eingegebenen Daten gehen dabei verloren.');
+    if (!confirm) {
+        return;
+    }
     localStorage.removeItem('formData');
     localStorage.removeItem('currentStep');
     form$.value.reset();
@@ -395,9 +408,15 @@ const handleSubmit = async (FormData, form$) => {
             </template>
         </Vueform>
     </div>
-    <div class="lfa-form__reset text-accent flex items-center justify-end opacity-80 mt-6 cursor-pointer select-none" @click="resetForm">
-        <Icon icon="material-symbols:device-reset" />
-        <span class="ml-2">neu beginnen</span>
+    <div class="lfa-form__reset text-accent flex items-center justify-end gap-4 text-sm opacity-80 mt-6 cursor-pointer select-none">
+        <div class="flex items-center gap-2" @click="resetForm">
+            <Icon icon="material-symbols:device-reset" />
+            <span>neu beginnen</span>
+        </div>
+        <div class="flex items-center gap-2" @click="saveProgess">
+            <Icon icon="material-symbols:save" />
+            <span ref="storeButton$">Formular speichern</span>
+        </div>
     </div>
 </template>
 
