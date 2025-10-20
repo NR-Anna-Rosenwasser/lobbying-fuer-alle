@@ -2,7 +2,7 @@
 import { onMounted, ref } from 'vue';
 import { Icon } from '@iconify/vue';
 const shareText = `Hoi 👋
-Ich habe gerade ein Anliegen bei der Kampagne "Lobbying für Alle" eingereicht. Es geht darum, dass in der Schweiz Anliegen, hinter denen viel Geld steckt, bevorzugt behandelt werden, während die Anliegen von normalen Menschen oft übersehen werden.
+Ich habe gerade ein Anliegen bei der Kampagne «Lobbying für Alle» eingereicht. Es geht darum, dass Themen, bei denen nicht mega viel Geld in Lobbyismus gesteckt wird, auch Gehör finden.
 `
 const url = ref("");
 onMounted(() => {

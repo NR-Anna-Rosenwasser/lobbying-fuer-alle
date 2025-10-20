@@ -292,7 +292,7 @@ const handleSubmit = async (FormData, form$) => {
                 <StaticElement
                 name="p_2"
                 tag="p"
-                content="<div>Es gibt Anliegen, die regelmässig von Parlamentarier*innen gefordert werden. Vielleicht wurde dein Anliegen bereits von einem anderen Parlamentsmitglied aufgenommen. <a href='https://www.parlament.ch/de/ratsbetrieb/suche-curia-vista'>Bitte prüfe die Datenbank des Parlaments möglichst genau</a>, um herauszufinden, ob dein Anliegen bereits in der Vergangenheit bearbeitet wurde.</div>"
+                content="<div>Es gibt Anliegen, die regelmässig von Parlamentarier*innen gefordert werden. Vielleicht wurde dein Anliegen bereits von einem anderen Parlamentsmitglied aufgenommen. <a href='https://www.parlament.ch/de/ratsbetrieb/suche-curia-vista'>Bitte suche deine Stichworte zuerst in der  Datenbank des Parlaments</a>, um herauszufinden, ob dein Anliegen bereits in der Vergangenheit bearbeitet wurde.</div>"
                 />
                 <CheckboxElement
                 name="concernParlchChecked"
@@ -352,8 +352,8 @@ const handleSubmit = async (FormData, form$) => {
                 />
                 <TextareaElement
                 name="concernExperts"
-                label="Kennst du Expert*innen, Organisationen oder sonstige Menschen, welche mehr über dein Anliegen wissen?"
-                description="Du darfst natürlich auch dich selbst nennen 😉 Sag uns in diesem Fall doch bitte, welche Expertise du mitbringst."
+                label="Kennst du Fachpersonen, Organisationen oder sonstige Menschen, welche mehr über dein Anliegen wissen?"
+                description="Du darfst natürlich auch dich selbst nennen. 😉 Sag uns in diesem Fall doch bitte, welche Expertise du mitbringst."
                 placeholder="optional"
                 :floating="false"
                 field-name="Expert*innen"
@@ -386,7 +386,7 @@ const handleSubmit = async (FormData, form$) => {
                 <StaticElement
                 name="p_5"
                 tag="p"
-                content="<div><strong>1. Diese Kampagne wird von Anna Rosenwasser und ihrem Mitarbeiterbüsi betrieben</strong> – was du hier rein schreibst, sehen wir beide.<br> <br><strong>2. Auch wenn wir uns das alles gut überlegt haben, können wir nicht garantieren, dass nichts schief läuft.</strong> Wir haben absolut keinen Plan<em> </em>wie viele Anliegen an uns herangetragen werden. Deshalb können wir dir nicht garantieren, dass wir dein Anliegen aufnehmen werden. Das soll aber auf keinen Fall heissen, dass dein Anliegen nicht wichtig ist oder wir es nicht für wichtig halten. Sei bitte nicht enttäuscht 💜<br><br><strong>3. Nimm dir Zeit und füll das Formular bitte sauber aus.</strong> Du kannst den Browser auch schliessen und später zurückkehren, nach jedem Schritt werden deine Angaben auf deinem Gerät gespeichert.<br><br>Wenn du Fragen hast, <a href='mailto:anna@rosenwasser.ch'>schreib uns ungeniert eine E-Mail!</a></div>"
+                content="<div><strong>1. Diese Kampagne wird von Nationalrätin Anna Rosenwasser und ihrem Mitarbeiterbüsi betrieben</strong> – was du hier rein schreibst, sehen wir beide.<br> <br><strong>2. Auch wenn wir uns das alles gut überlegt haben: Das ist ein Experiment, und wir können noch nicht abschätzen, wie viele Anliegen an uns herangetragen werden.</strong> Deshalb können wir dir nicht garantieren, dass wir dein Anliegen aufnehmen werden. Versuchen wir es zusammen!<br><br><strong>3. Nimm dir Zeit und füll das Formular bitte sauber aus.</strong> Du kannst den Browser auch schliessen und später zurückkehren, nach jedem Schritt werden deine Angaben auf deinem Gerät gespeichert.<br><br>Wenn du Fragen hast, <a href='mailto:anna@rosenwasser.ch'>schreib uns ungeniert eine E-Mail!</a></div>"
                 align="left"
                 />
             </FormElements>
