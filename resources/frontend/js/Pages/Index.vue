@@ -17,10 +17,11 @@ import { Link } from '@inertiajs/vue3';
                         </div>
                         <div class="lfa-landing__lead__content mt-6">
                             <p>Lobby, das heisst: Gruppen, die ein spezifisches Interesse vertreten und dafür sorgen, dass es in der Politik Gehör findet.  Das gilt jedoch nicht für alle Anliegen gleich: Forderungen, hinter denen grosse Firmen oder Organisationen mit viel Geld stehen, finden bei vielen Politiker*innen mehr Gehör. Parlamentarer*innen erhalten dafür Geschenke oder nehmen bei Interessensvertretungen (oft bezahlte) Ämtli an. Die Anliegen all derjenigen Menschen oder Gruppen, die sich das nicht leisten können, bleiben je länger je mehr auf der Strecke. Wir finden: <b>Das ist nicht demokratisch.</b></p>
-                            <p>Auf die Wintersession 2026 starten wir einen Versuch: Hast du ein Anliegen, das dich beschäftigt? Ist dir ein Problem aufgefallen, dem zu wenig Beachtung geschenkt wird? Oder willst du etwas ändern, das dich stört? <b>Dann füll dieses Formular aus!</b></p>
+                            <p>Auf die Wintersession 2026 starte ich einen Versuch: Hast du ein Anliegen, das dich beschäftigt? Ist dir ein Problem aufgefallen, dem zu wenig Beachtung geschenkt wird? Oder willst du etwas ändern, das dich stört? <b>Dann schlag es mir vor und ich kläre ab, ob und wie wir dein Thema in den Rat bringen können.</b></p>
                             <div class="lfa-landing__lead__content__button flex justify-end mt-6">
                                 <Link href="/app" class="lfa-button text-2xl">Ich bin dabei!</Link>
                             </div>
+                            <p class="mt-6 text-sm italic opacity-60">Eine Kampagne von Nationalrätin Anna Rosenwasser</p>
                         </div>
                     </div>
                 </div>
