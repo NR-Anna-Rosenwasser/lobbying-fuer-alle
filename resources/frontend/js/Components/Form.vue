@@ -21,6 +21,10 @@ onMounted(() => {
 const handleNext = (next$) => {
     localStorage.setItem('formData', JSON.stringify(form$.value?.data || {}));
     localStorage.setItem('currentStep', next$.name);
+    storeButton$.value.innerText = 'Gespeichert ✅';
+    setTimeout(() => {
+        storeButton$.value.innerText = 'Formular speichern';
+    }, 2000);
 };
 
 const saveProgess = () => {
