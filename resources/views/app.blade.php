@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
+
     <title>Lobbying für alle – damit auch dein Anliegen gehört wird</title>
     <meta name="description" content="In der Schweiz finden Anliegen mit mehr Geld auch mehr Gehör. Damit auch dein Anliegen gehört wird, haben wir die Kampagne «Lobbying für alle» ins Leben gerufen." />
     <meta property="og:title" content="Lobbying für alle – damit auch dein Anliegen gehört wird" />
@@ -24,6 +24,11 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-touch-icon.png" />
     <meta name="apple-mobile-web-app-title" content="Lobby für alle" />
     <link rel="manifest" href="/images/favicon/site.webmanifest" />
+    <script
+        src="https://analytics.toes.ch/api/script.js"
+        data-site-id="de8893041129"
+        defer
+    ></script>
     @vite('resources/frontend/js/app.js')
     @inertiaHead
   </head>
